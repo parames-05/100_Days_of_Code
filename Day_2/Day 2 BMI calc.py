@@ -1,4 +1,5 @@
-height = float(input("Enter Your height (in meters):"))
-Weight = float(input("Enter your Weight "))
-bmi = Weight/(height**2)
+height = float(input("Enter Your height (in meters): "))
+Weight = float(input("Enter your Weight (in kg): "))
+bmi_calc = Weight/(height**2)
+bmi = round(bmi_calc,2)
 print(f"Your BMI rating is {bmi}")
