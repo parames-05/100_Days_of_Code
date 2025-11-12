@@ -1,4 +1,5 @@
 import random as rrr
+import pyperclip
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -20,13 +21,10 @@ ch3 = rrr.choices(symbols, k=sym)
 
 # Combine all into one flat list
 aaa = ch1 + ch2 + ch3
-
-# Shuffle in-place
 rrr.shuffle(aaa)
 
-# Build final password string
 ccc = ""
 for item in aaa:
     ccc += item
-
-print(f"Your password is: {ccc}")
+pyperclip.copy(ccc)
+print(f"Your password is: {ccc} and is copied to the clipboard")
