@@ -9,15 +9,15 @@ dept_font_path = "ToThePointRegular-n9y4.ttf"
 
 names = [
     "Parameswaran M V",
+    "Vishnu R",
     "Velavan R",
-    "Ganeshan G",
-    "Prabhakaran"
+    "Ganeshan G"
 ]
 
 department = "III EEE"
 
-name_font_size = 50
-dept_font_size = 50
+name_font_size = 57
+dept_font_size = 57
 name_center_x = 374
 dept_center_x = 799
 text_center_y = 439

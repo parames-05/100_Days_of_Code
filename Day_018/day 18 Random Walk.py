@@ -20,8 +20,5 @@ for __ in range(70):
     timmy.setheading(rrr.choice(directions))
     timmy.color(Random_color())
 
-
-
-
 my_screen= Screen()
 my_screen.exitonclick()
