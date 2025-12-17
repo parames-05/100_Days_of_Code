@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 MY_LAT = 10.997093  # Your latitude
-MY_LONG = 70.017311  # Your longitude
+MY_LONG = 77.017311  # Your longitude
 MY_EMAIL = "abc@gmail.com"
 MY_PASSWORD = "Enter_your_app_password_here"
 TO_EMAIL = "abc@gmail.com"
