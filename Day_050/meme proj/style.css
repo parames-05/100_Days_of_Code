@@ -1,0 +1,21 @@
+html{
+    background-color: black;
+}
+div{
+    padding: 100px;
+    align-items: center;
+}
+img{
+    height:500px;
+    width: 700px;
+}
+h1{
+    color:white;
+    margin-left:340px;
+  font-family: "Share Tech", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+h3{
+    color:white;
+}
