@@ -9,6 +9,6 @@ l1=[]
 for items in article:
     l1.append(items.text)
 num_of_articles = l1[1]
-print(num_of_articles)
+print("Article Count: ",num_of_articles)
 driver.close()
 

@@ -23,12 +23,13 @@ class InternetSpeedTwitterBot:
         go_button = self.driver.find_element(By.CSS_SELECTOR, value=".start-button a")
         go_button.click()
 
-        time.sleep(60)
+        time.sleep(39)
         self.up = float(self.driver.find_element(By.CLASS_NAME, "download-speed").text)
         self.down = float(self.driver.find_element(By.CLASS_NAME, "upload-speed").text)
         print("Loading Results")
         print(self.up)
         print(self.down)
+        self.driver.close()
 
 
 
