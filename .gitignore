@@ -417,3 +417,7 @@ venv/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+.sass-cache/
+
+".sass-cache/" 
