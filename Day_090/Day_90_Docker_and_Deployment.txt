@@ -1,0 +1,145 @@
+DAY 90 - DOCKER & ONLINE HOSTING PLATFORMS (DEPLOYMENT FUNDAMENTALS)
+
+========================== PART 1: WHY DOCKER EXISTS ==================================================
+
+Problem: “It works on my machine.”
+
+Different machines have: - Different OS - Different Python/Node
+versions - Different libraries - Different environment variables
+
+Docker solves this by packaging: Application + Dependencies + Runtime +
+OS layer
+
+Docker creates a CONTAINER.
+
+A container is: - Lightweight - Isolated - Portable - Reproducible
+
+Write once. Run anywhere.
+
+================================================== PART 2: CORE DOCKER CONCEPTS ==================================================
+
+Image: A blueprint of your environment.
+
+Container: A running instance of an image.
+
+Dockerfile: A script that defines how to build an image.
+
+Docker Hub: Cloud registry to store images.
+
+================================================== PART 3: BASIC DOCKER COMMANDS ==================================================
+
+Check Docker version
+
+docker –version
+
+Pull official Python image
+
+docker pull python:3.11
+
+List images
+
+docker images
+
+Run container interactively
+
+docker run -it python:3.11
+
+List running containers
+
+docker ps
+
+List all containers
+
+docker ps -a
+
+Stop container
+
+docker stop
+
+Remove container
+
+docker rm
+
+Remove image
+
+docker rmi
+
+================================================== PART 4: SAMPLE DOCKERFILE (PYTHON APP) ==================================================
+
+Create a file named Dockerfile:
+
+  ---------------------------------
+  FROM python:3.11
+
+  WORKDIR /app
+
+  COPY requirements.txt . RUN pip
+  install -r requirements.txt
+
+  COPY . .
+
+  CMD [“python”, “app.py”]
+  ---------------------------------
+
+Build image: docker build -t myapp .
+
+Run container: docker run -p 5000:5000 myapp
+
+================================================== PART 5: WHY DEPLOYMENT MATTERS ==================================================
+
+Local development = private. Deployment = public internet access.
+
+Deployment requires: - Server - Runtime environment - Scaling
+capability - Domain name - HTTPS - Monitoring
+
+================================================== PART 6: POPULAR HOSTING PLATFORMS ==================================================
+
+1.  RENDER
+
+-   Easy backend deployment
+-   Supports Docker
+-   Auto HTTPS
+-   Free tier available
+
+2.  HEROKU
+
+-   PaaS (Platform as a Service)
+-   Git push deployment
+-   Dyno-based scaling
+
+3.  NETLIFY
+
+-   Best for static sites & frontend
+-   CI/CD integration
+-   Auto deploy from GitHub
+
+4.  VERCEL
+
+-   Optimized for Next.js
+-   Edge functions
+-   Serverless deployment
+
+5.  RAILWAY
+
+-   Simple backend hosting
+-   Database support
+-   Environment variable management
+
+================================================== PART 7: DEPLOYMENT WORKFLOW (MODERN) ==================================================
+
+Local Development ↓ Push to GitHub ↓ Platform auto-builds ↓ Docker
+builds environment ↓ App goes live ↓ Users access via URL
+
+This is CI/CD (Continuous Integration / Continuous Deployment).
+
+================================================== PART 8: WHY DOCKER + GITHUB + CLOUD = POWER ==================================================
+
+Git = Version control GitHub = Collaboration Docker = Environment
+consistency Hosting Platform = Global availability
+
+Together they create: Reproducible, scalable, production-ready systems.
+
+This is the transition from: “I can code” to “I can ship software to the
+world.”
+
+================================================== END OF DAY 90 ==================================================

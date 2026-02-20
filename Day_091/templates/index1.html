@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MorseMind | Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(circle at center, #0d0d0d 0%, #000000 100%);
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 3px;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc55, 0 0 20px #00ffcc55;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ffcc44; }
+            to { text-shadow: 0 0 20px #00ffcc99; }
+        }
+        p {
+            font-size: 1.1rem;
+            color: #aaa;
+            max-width: 600px;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 40px;
+        }
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border: 2px solid #00ffcc;
+            border-radius: 50px;
+            background: transparent;
+            color: #00ffcc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 15px #00ffccaa;
+        }
+    </style>
+</head>
+<body>
+    <h1>MorseMind</h1>
+    <p>Turn your words into rhythm and light — translate text into Morse Code with elegance.</p>
+    <a href="{{ url_for('convert') }}" class="btn">Convert Now</a>
+</body>
+</html>

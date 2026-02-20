@@ -1,0 +1,61 @@
+DAY 89 - GITHUB & REMOTE WORKFLOW COMMANDS
+
+  --------------------------------------------------
+  1. Add a remote repository
+  --------------------------------------------------
+  git remote add origin
+  https://github.com/your-username/your-repo.git
+
+  # Verify remote git remote -v
+  --------------------------------------------------
+
+2. Push local repository to GitHub
+
+git push -u origin main # (If default branch is master) # git push -u
+origin master
+
+  --------------------------------------------------
+  3. Clone an existing repository
+  --------------------------------------------------
+  git clone
+  https://github.com/username/repository-name.git
+
+  # Move into project folder cd repository-name
+  --------------------------------------------------
+
+4. Pull latest changes from remote
+
+git pull origin main
+
+  --------------------------------------------------
+  5. Create and push a new branch
+  --------------------------------------------------
+  git branch feature-login git switch feature-login
+
+  # After making changes: git add . git commit -m
+  “Added login feature”
+
+  # Push branch to GitHub git push origin
+  feature-login
+  --------------------------------------------------
+
+6. Fetch remote changes (without merging)
+
+git fetch origin
+
+  --------------------------------------------------
+  7. Merge fetched changes manually (if needed)
+  --------------------------------------------------
+  git merge origin/main
+
+  --------------------------------------------------
+
+8. View branch tracking information
+
+git branch -vv
+
+  ----------------------------------
+  9. Basic GitHub Workflow Summary
+  ----------------------------------
+
+Clone → Create Branch → Commit → Push → Pull Request → Merge

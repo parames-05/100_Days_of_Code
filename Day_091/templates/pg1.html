@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MorseMind | Convert</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0d0d0d, #111, #050505);
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #00ffcc;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00ffcc66;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            max-width: 600px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: #111;
+            border: 1px solid #00ffcc55;
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            padding: 15px;
+            resize: none;
+            outline: none;
+            transition: border 0.3s ease;
+        }
+        textarea:focus {
+            border: 1px solid #00ffcc;
+            box-shadow: 0 0 10px #00ffcc66;
+        }
+        button {
+            margin-top: 25px;
+            padding: 12px 35px;
+            font-size: 1rem;
+            border: 2px solid #00ffcc;
+            border-radius: 50px;
+            background: transparent;
+            color: #00ffcc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 15px #00ffccaa;
+        }
+        .output {
+            margin-top: 30px;
+            width: 80%;
+            max-width: 600px;
+            padding: 15px;
+            background: #111;
+            border-radius: 10px;
+            border: 1px solid #00ffcc33;
+            color: #00ffcc;
+            font-family: monospace;
+            white-space: pre-wrap;
+            min-height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <h1>MorseMind Converter</h1>
+    <form method="POST" action="{{ url_for('convert') }}">
+        <textarea name="text_input" placeholder="Type your message here..."></textarea>
+        <button type="submit">Convert</button>
+    </form>
+
+    {% if morse_output %}
+    <div class="output">
+        {{ morse_output }}
+    </div>
+    {% endif %}
+</body>
+</html>
