@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette OS - Chromatic Soul Extractor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="os-grid">
+
+    <div class="desktop-container">
+        <div class="desktop-icon">
+            <div class="icon-box"><i data-lucide="folder"></i></div>
+            <span class="icon-label">Color_Palette.exe</span>
+        </div>
+        <div class="desktop-icon">
+            <div class="icon-box"><i data-lucide="trash-2"></i></div>
+            <span class="icon-label">Recycle_Bin</span>
+        </div>
+        <div class="desktop-icon" onclick="toggleAbout()">
+            <div class="icon-box"><i data-lucide="file-text"></i></div>
+            <span class="icon-label">READ_ME.TXT</span>
+        </div>
+    </div>
+
+    <main class="window-wrapper">
+        <div class="retro-window">
+            <div class="title-bar">
+                <div class="title-content">
+                    <i data-lucide="palette" size="18"></i>
+                    <span class="title-text">palette_generator_v1.0 - {% if palette %}Analysis Complete{% else %}Initializing{% endif %}</span>
+                </div>
+                <div class="title-controls">
+                    <button class="win-btn"><i data-lucide="minus"></i></button>
+                    <button class="win-btn"><i data-lucide="square"></i></button>
+                    <button class="win-btn btn-close" onclick="location.href='/'"><i data-lucide="x"></i></button>
+                </div>
+            </div>
+
+            <div class="menu-bar">
+                <span>File</span>
+                <span>Edit</span>
+                <span>View</span>
+                <span>Help</span>
+            </div>
+
+            <div class="content-area">
+                {% if not image_uploaded %}
+                <div class="landing-panel">
+                    <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
+                        <label class="upload-zone" for="file-upload">
+                            <input type="file" id="file-upload" name="image" hidden onchange="document.getElementById('upload-form').submit()">
+                            <div class="icon-stack">
+                                <div class="stack-sage"></div>
+                                <div class="stack-pink"><i data-lucide="image" size="48"></i></div>
+                            </div>
+                            <p class="upload-text"><span>click to upload</span></p>
+                        </label>
+                    </form>
+
+                    <div class="info-panel">
+                        <h1 class="hero-text">COLOR PALETTE <br>GENERATOR</h1>
+                        <p class="sub-text">We extract the chromatic soul of your image.</p>
+                        <div class="button-group">
+                            <button class="btn-primary" onclick="document.getElementById('file-upload').click()">
+                                <i data-lucide="upload-cloud"></i> INITIALIZE UPLOAD
+                            </button>
+                            <div class="btn-row">
+                                <button class="btn-secondary"><i data-lucide="info"></i> SYSTEM_SPECS</button>
+                                <button class="btn-secondary"><i data-lucide="history"></i> ARCHIVES</button>
+                            </div>
+                        </div>
+                        <div class="system-status">
+                            <div class="led-container">
+                                <div class="led led-green"></div>
+                                <div class="led"></div>
+                                <div class="led"></div>
+                            </div>
+                            <span class="status-label">System: Ready to extract</span>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="processing-panel">
+                    <div class="analysis-header">
+                        <div class="image-preview">
+                            <img src="{{ image_url }}" alt="Uploaded">
+                        </div>
+                        <div class="analysis-meta">
+                            <h2>Processing Pixel Data</h2>
+                            <p>Target: {{ filename }}</p>
+                            <div class="extraction-status">
+                                <i data-lucide="hourglass" class="spin"></i>
+                                <span><br>Extraction complete.<br></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>Analyzing pixels...</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="progress-track">
+                            {% for i in range(20) %}
+                            <div class="progress-segment active"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="swatches-section">
+                        <h3 class="swatch-title">Extracted Swatches</h3>
+                        <div class="swatch-grid">
+                            {% if palette %}
+                                {% for color in palette %}
+                                <div class="swatch-card">
+                                    <div class="color-circle" style="background-color: {{ color.hex }}"></div>
+                                    <div class="color-code">{{ color.hex | upper }}</div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="action-footer">
+                        <button class="btn-secondary" onclick="location.href='/'"><i data-lucide="history"></i> Cancel Task</button>
+                        <button class="btn-primary"><i data-lucide="save"></i> Save Draft</button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="window-footer">
+                <div class="footer-left">
+                    <span>1 object(s) selected</span>
+                    <span class="separator">|</span>
+                    <span>4.2 MB RAM available</span>
+                </div>
+                <div class="footer-right">
+                    <i data-lucide="network" size="14"></i>
+                    <span>ONLINE</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="taskbar">
+        <button class="start-btn">
+            <i data-lucide="grid"></i>
+            START
+        </button>
+        <div class="taskbar-divider"></div>
+        <div class="active-app-tab">
+            <span>palette_generator_v1.cstr</span>
+        </div>
+        <div class="spacer"></div>
+        <div class="system-tray">
+            <i data-lucide="volume-2"></i>
+            <i data-lucide="wifi"></i>
+            <span id="os-clock">00:00 PM</span>
+        </div>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('os-clock').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>

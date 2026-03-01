@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe | Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="game-body">
+
+    <div class="game-wrapper">
+
+        <div class="top-bar">
+            <div class="status">SYSTEM READY</div>
+            <button onclick="restartGame()" class="restart-btn">RESTART</button>
+        </div>
+
+        <div class="board" id="board">
+            {% for i in range(9) %}
+                <div class="cell" data-index="{{ i }}"></div>
+            {% endfor %}
+        </div>
+
+        <div class="result-panel" id="resultPanel">
+            <span id="resultText"></span>
+        </div>
+
+    </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

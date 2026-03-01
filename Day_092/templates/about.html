@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - TypingChallenge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #13ec49;
+            --pastel-lavender: #e0d7ff;
+            --pastel-peach: #ffdcc5;
+            --pastel-mint: #d1fae5;
+            --butter-yellow: #fff380;
+            --bg-light: #f6f8f6;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-light);
+        }
+
+        .neo-border { border: 4px solid #000; }
+        .neo-border-thin { border: 2px solid #000; }
+        .shadow-neo { box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+        .shadow-neo-lg { box-shadow: 10px 10px 0px 0px rgba(0,0,0,1); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .floating { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+
+<body class="antialiased text-black">
+
+    <!-- Background Decorative Layer -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-[#d1fae5] opacity-40 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-80 h-80 bg-[#e0d7ff] opacity-40 rounded-full blur-3xl"></div>
+        <div class="absolute top-[20%] left-[15%] text-7xl font-black text-black/10 select-none floating">A</div>
+        <div class="absolute top-[60%] right-[20%] text-8xl font-black text-black/10 select-none floating" style="animation-delay: 1s">B</div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="w-full px-6 py-6 lg:px-20 relative z-20">
+        <nav class="flex items-center justify-between bg-white neo-border p-4 rounded-full shadow-neo max-w-7xl mx-auto">
+            <div onclick="location.href='/'" class="flex items-center gap-3 px-4 cursor-pointer">
+                <div class="size-8 bg-[#13ec49] neo-border-thin rounded-full flex items-center justify-center">⌨️</div>
+                <h2 class="text-black text-xl font-bold">TypingChallenge</h2>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 font-bold">
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/about">About Me</a>
+            </div>
+
+            <button onclick="location.href='/'"
+                class="bg-[#13ec49] neo-border-thin shadow-neo px-6 py-2 rounded-full font-bold">
+                Back Home
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <main class="relative z-10 flex flex-col items-center justify-center px-6 py-20 text-center">
+
+        <h1 class="text-6xl md:text-7xl font-black mb-16">
+            Meet The <span class="bg-[#ffdcc5] px-2">Creator</span>
+        </h1>
+
+        <!-- Avatar Container -->
+        <div class="relative mb-12">
+
+            <div class="w-64 h-64 bg-[#fff380] neo-border shadow-neo-lg rounded-full flex items-center justify-center p-3">
+                <img
+                    src="https://api.dicebear.com/7.x/adventurer/svg?seed=TypingHero"
+                    alt="Avatar"
+                    class="rounded-full w-full h-full object-cover"
+                >
+            </div>
+
+        </div>
+
+        <!-- Editable Paragraph -->
+        <div class="max-w-3xl bg-white neo-border shadow-neo p-10 rounded-2xl">
+
+            <p class="text-xl leading-relaxed font-medium">
+                This platform was created by a human who believes keyboards are musical instruments and the spacebar deserves more appreciation.
+                Fueled by caffeine, curiosity, and an unreasonable attachment to clean UI design, the creator decided that typing should feel
+                less like homework and more like a boss battle. When not adjusting pixel shadows by one unit for “aesthetic reasons,” they can
+                be found debating whether WPM is a sport, a philosophy, or a personality trait. This project is equal parts experiment, obsession,
+                and love letter to the click-clack symphony of mechanical keys. If something looks slightly over-engineered, that was intentional.
+                Probably.
+            </p>
+
+            <p class="mt-6 text-black/60 font-bold">
+                Created By MVP
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

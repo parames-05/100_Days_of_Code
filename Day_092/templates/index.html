@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypingChallenge - Created by MVP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #13ec49;
+            --pastel-lavender: #e0d7ff;
+            --pastel-peach: #ffdcc5;
+            --pastel-mint: #d1fae5;
+            --butter-yellow: #fff380;
+            --bg-light: #f6f8f6;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-light);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-blend-mode: overlay;
+        }
+
+        .neo-border { border: 4px solid #000; }
+        .neo-border-thin { border: 2px solid #000; }
+        .shadow-neo { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+        .shadow-neo-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+        .shadow-neo-xl { box-shadow: 12px 12px 0px 0px rgba(0,0,0,1); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+
+        .hidden-state { display: none !important; }
+        .char-correct { color: #13ec49; font-weight: 900; }
+        .char-incorrect { color: #ef4444; background-color: #fee2e2; }
+        .char-untyped { color: rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body class="antialiased text-black">
+
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-[#d1fae5] opacity-40 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-80 h-80 bg-[#e0d7ff] opacity-40 rounded-full blur-3xl"></div>
+        <div class="absolute top-[15%] left-[10%] text-6xl font-black text-black/10 select-none floating">A</div>
+        <div class="absolute top-[60%] left-[15%] text-8xl font-black text-black/10 select-none floating" style="animation-delay: 1s">S</div>
+        <div class="absolute top-[20%] right-[15%] text-7xl font-black text-black/10 select-none floating" style="animation-delay: 2s">D</div>
+    </div>
+
+    <header class="w-full px-6 py-6 lg:px-20 relative z-20">
+        <nav class="flex items-center justify-between bg-white neo-border p-4 rounded-full shadow-neo max-w-7xl mx-auto">
+            <div class="flex items-center gap-3 px-4 cursor-pointer" onclick="location.href='/'">
+                <div class="size-8 bg-[#13ec49] neo-border-thin rounded-full flex items-center justify-center">⌨️</div>
+                <h2 class="text-black text-xl font-bold">TypingChallenge</h2>
+            </div>
+            <div class="hidden md:flex items-center gap-10 font-bold">
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/about">About Me</a>
+            </div>
+            <button onclick="location.href='/about'" class="bg-[#13ec49] neo-border-thin shadow-neo px-6 py-2 rounded-full font-bold">
+                Let's Go
+            </button>
+        </nav>
+    </header>
+
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-12 text-center max-w-7xl mx-auto w-full">
+
+        <!-- IDLE STATE -->
+        <div id="state-idle" class="w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center text-left">
+                <div>
+                    <div class="inline-block bg-[#13ec49] neo-border-thin px-4 py-1 rounded-full shadow-neo mb-8">
+                        <span class="text-xs font-black uppercase tracking-widest">New Sentence everyday</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black leading-tight mb-8">
+                        Are You Ready for the <span class="bg-[#ffdcc5] px-2">60-Second</span> Typing Challenge?
+                    </h1>
+                    <button onclick="startGame()" class="bg-[#fff380] neo-border shadow-neo-lg hover:shadow-neo hover:translate-x-1 hover:translate-y-1 transition-all px-10 py-5 rounded-full text-2xl font-black flex items-center gap-3">
+                        START CHALLENGE ➜
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAYING STATE -->
+        <div id="state-playing" class="w-full max-w-4xl hidden-state">
+            <div class="bg-white neo-border rounded-2xl shadow-neo-lg p-8">
+
+                <!-- USERNAME INPUT ADDED -->
+                <input id="username" placeholder="Enter Your Name"
+                    class="mb-6 px-4 py-2 neo-border-thin rounded-full w-60 text-center font-bold">
+
+                <div class="flex justify-between mb-8">
+                    <div class="bg-[#d1fae5] neo-border-thin px-6 py-2 rounded-full shadow-neo font-black text-xl">
+                        Time: <span id="timer">60</span>s
+                    </div>
+                    <button onclick="location.reload()" class="bg-white neo-border-thin p-2 rounded-full shadow-neo">🔄</button>
+                </div>
+
+                <div id="text-display" class="relative p-6 bg-[#f6f8f6] neo-border-thin rounded-xl text-2xl leading-relaxed text-left font-medium min-h-[200px] break-words">
+                </div>
+
+                <textarea id="hidden-input" class="absolute opacity-0 pointer-events-none"></textarea>
+                <div class="mt-6 text-black/40 font-bold uppercase tracking-widest text-sm">
+                    Start typing to begin...
+                </div>
+            </div>
+        </div>
+
+        <!-- FINISHED STATE -->
+        <div id="state-finished" class="w-full max-w-2xl hidden-state">
+            <div class="bg-white neo-border rounded-2xl shadow-neo-xl p-12">
+                <h2 class="text-5xl font-black mb-8">Result!</h2>
+                <div class="grid grid-cols-2 gap-8 mb-12">
+                    <div class="bg-[#d1fae5] neo-border p-6 rounded-xl shadow-neo">
+                        <div class="text-sm font-bold uppercase opacity-60">Speed</div>
+                        <div id="final-wpm" class="text-6xl font-black">0</div>
+                        <div class="font-bold">WPM</div>
+                    </div>
+                    <div class="bg-[#ffdcc5] neo-border p-6 rounded-xl shadow-neo">
+                        <div class="text-sm font-bold uppercase opacity-60">Accuracy</div>
+                        <div id="final-accuracy" class="text-6xl font-black">0%</div>
+                        <div class="font-bold">Precision</div>
+                    </div>
+                </div>
+                <button onclick="location.reload()" class="bg-[#13ec49] neo-border shadow-neo px-8 py-4 rounded-full text-xl font-black">
+                    TRY AGAIN
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const sampleText = {{ sample_text | tojson }};
+        let timeLeft = 60;
+        let timerId = null;
+        let isPlaying = false;
+        let inputString = "";
+
+        const idleState = document.getElementById('state-idle');
+        const playingState = document.getElementById('state-playing');
+        const finishedState = document.getElementById('state-finished');
+        const textDisplay = document.getElementById('text-display');
+
+        function startGame() {
+            idleState.classList.add('hidden-state');
+            playingState.classList.remove('hidden-state');
+            renderText();
+            window.addEventListener('keydown', handleKeydown);
+        }
+
+        function renderText() {
+            textDisplay.innerHTML = sampleText.split('').map((char, i) => {
+                let status = "char-untyped";
+                if (i < inputString.length) {
+                    status = inputString[i] === char ? "char-correct" : "char-incorrect";
+                }
+                return `<span class="${status}">${char}</span>`;
+            }).join('');
+        }
+
+        function handleKeydown(e) {
+            if (finishedState.offsetParent !== null) return;
+
+            if (!isPlaying && e.key.length === 1) {
+                isPlaying = true;
+                timerId = setInterval(updateTimer, 1000);
+            }
+
+            if (e.key === 'Backspace') {
+                inputString = inputString.slice(0, -1);
+            } else if (e.key.length === 1) {
+                inputString += e.key;
+            }
+
+            renderText();
+
+            if (inputString.length >= sampleText.length) {
+                endGame();
+            }
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            document.getElementById('timer').innerText = timeLeft;
+            if (timeLeft <= 0) endGame();
+        }
+
+        async function endGame() {
+            clearInterval(timerId);
+
+            const response = await fetch('/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    input_string: inputString,
+                    time_left: timeLeft,
+                    username: document.getElementById("username").value || "Anonymous"
+                })
+            });
+
+            const data = await response.json();
+
+            playingState.classList.add('hidden-state');
+            finishedState.classList.remove('hidden-state');
+
+            document.getElementById('final-wpm').innerText = data.wpm;
+            document.getElementById('final-accuracy').innerText = data.accuracy + "%";
+        }
+    </script>
+</body>
+</html>

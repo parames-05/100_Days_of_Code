@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard - TypingChallenge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #13ec49;
+            --pastel-lavender: #e0d7ff;
+            --pastel-peach: #ffdcc5;
+            --pastel-mint: #d1fae5;
+            --butter-yellow: #fff380;
+            --bg-light: #f6f8f6;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-light);
+        }
+
+        .neo-border { border: 4px solid #000; }
+        .neo-border-thin { border: 2px solid #000; }
+        .shadow-neo { box-shadow: 6px 6px 0px 0px rgba(0,0,0,1); }
+        .shadow-neo-lg { box-shadow: 10px 10px 0px 0px rgba(0,0,0,1); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .floating { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+
+<body class="antialiased text-black">
+
+    <!-- Background Decorations -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-[#d1fae5] opacity-40 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-10 w-80 h-80 bg-[#e0d7ff] opacity-40 rounded-full blur-3xl"></div>
+        <div class="absolute top-[15%] left-[10%] text-6xl font-black text-black/10 select-none floating">W</div>
+        <div class="absolute top-[60%] left-[15%] text-8xl font-black text-black/10 select-none floating" style="animation-delay: 1s">P</div>
+        <div class="absolute top-[20%] right-[15%] text-7xl font-black text-black/10 select-none floating" style="animation-delay: 2s">M</div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="w-full px-6 py-6 lg:px-20 relative z-20">
+        <nav class="flex items-center justify-between bg-white neo-border p-4 rounded-full shadow-neo max-w-7xl mx-auto">
+            <div onclick="location.href='/'" class="flex items-center gap-3 px-4 cursor-pointer">
+                <div class="size-8 bg-[#13ec49] neo-border-thin rounded-full flex items-center justify-center">⌨️</div>
+                <h2 class="text-black text-xl font-bold">TypingChallenge</h2>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 font-bold">
+                <a href="/leaderboard">Leaderboard</a>
+                <a href="/about">About Me</a>
+            </div>
+
+            <button onclick="location.href='/'"
+                class="bg-[#13ec49] neo-border-thin shadow-neo px-6 py-2 rounded-full font-bold">
+                Back Home
+            </button>
+        </nav>
+    </header>
+
+    <!-- Leaderboard Section -->
+    <main class="relative z-10 flex flex-col items-center px-6 py-16 text-center">
+
+        <h1 class="text-6xl md:text-7xl font-black mb-16">
+            🏆 Global <span class="bg-[#ffdcc5] px-2">Top 3</span>
+        </h1>
+
+        <div class="w-full max-w-3xl space-y-8">
+
+            {% if players %}
+                {% for player in players %}
+                <div class="
+                    {% if loop.index == 1 %}
+                        bg-[#fff380]
+                    {% elif loop.index == 2 %}
+                        bg-[#e0d7ff]
+                    {% else %}
+                        bg-[#d1fae5]
+                    {% endif %}
+                    neo-border shadow-neo-lg p-8 rounded-2xl
+                ">
+
+                    <div class="text-4xl font-black mb-2">
+                        {{ loop.index }}. {{ player.name }}
+                    </div>
+
+                    <div class="text-xl font-bold">
+                        {{ player.wpm }} WPM • {{ player.accuracy }}% Accuracy
+                    </div>
+
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="bg-white neo-border shadow-neo p-8 rounded-xl">
+                    <div class="text-2xl font-bold">
+                        No scores yet. Be the first legend.
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</body>
+</html>
