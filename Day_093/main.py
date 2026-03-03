@@ -32,19 +32,15 @@ def add_watermark(base_image_path, watermark_path, output_path,
     else:  #centre
         x = (base_width - watermark_width) // 2
         y = (base_height - watermark_height) // 2
-
-    # Paste watermark onto base image
     base.paste(watermark_layer, (x, y), watermark_layer)
-
-    # Save final image
     base.convert("RGB").save(output_path)
 
 # Example usage
 add_watermark(
     base_image_path="exampaper.jpg",
     watermark_path="logo1.png",
-    output_path="watermarked_top_right.jpg",
-    position="top_right",
+    output_path="watermarked_bottom_right.jpg",
+    position="bottom_right",
     opacity=120,
     scale=0.2
 )

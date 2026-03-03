@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PureGym Booking</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #1F2937;
+    background: #F9FAFB;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: white;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #3B82F6;
+  }
+  nav button {
+    background: #3B82F6;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  nav button:hover {
+    background: #2563EB;
+  }
+
+  .hero {
+    background-image: url('https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+  }
+  .hero h2 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .container {
+    padding: 2rem;
+  }
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #1F2937;
+  }
+
+  /* Booking Overlay */
+  #bookingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 200;
+  }
+  #calendarModal {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+  #calendarModal h3 {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.8rem;
+  }
+  #calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.4rem;
+  }
+  .calendarCell {
+    padding: 1rem;
+    background: #E5E7EB;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .calendarCell:hover {
+    background: #D1D5DB;
+  }
+  .selected {
+    background: #3B82F6;
+    color: white !important;
+  }
+  #closeBtn {
+    background: #EF4444;
+    color: white;
+    padding: 0.6rem;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  #closeBtn:hover {
+    background: #DC2626;
+  }
+  #slotCount {
+    margin-top: 0.5rem;
+    text-align: center;
+    color: #1F2937;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <h1>PureGym</h1>
+  <button id="openBookingBtn">Book My Slot</button>
+</nav>
+
+<section class="hero">
+  <div>
+    <h2>Train Hard. Stay Strong.</h2>
+    <p>Your fitness journey starts here</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="section-title">About Us</div>
+  <p style="text-align:center; margin-bottom:2rem;">
+    PureGym is a state-of-the-art training facility offering flexible gym slots to fit your schedule. Book
+    your preferred time today!
+  </p>
+
+  <div class="section-title">Facilities</div>
+  <div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;">
+    <img src="https://images.pexels.com/photos/282551/pexels-photo-282551.jpeg" width="260" style="border-radius:8px;">
+    <img src="https://images.pexels.com/photos/2294351/pexels-photo-2294351.jpeg" width="260" style="border-radius:8px;">
+    <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg" width="260" style="border-radius:8px;">
+  </div>
+</div>
+
+<!-- Booking Overlay -->
+<div id="bookingOverlay">
+  <div id="calendarModal">
+    <h3>Select Your Slot</h3>
+    <div id="calendarGrid"></div>
+    <div id="slotCount">Selected: 0 / 15</div>
+    <button id="closeBtn">Close</button>
+  </div>
+</div>
+
+<script>
+  const openBookingBtn = document.getElementById("openBookingBtn");
+  const bookingOverlay = document.getElementById("bookingOverlay");
+  const calendarGrid = document.getElementById("calendarGrid");
+  const closeBtn = document.getElementById("closeBtn");
+  const slotCountText = document.getElementById("slotCount");
+
+  let selectedSlots = [];
+
+  function openCalendar() {
+    bookingOverlay.style.display = "flex";
+  }
+  function closeCalendar() {
+    bookingOverlay.style.display = "none";
+    selectedSlots = [];
+    updateCalendarSelection();
+  }
+
+  openBookingBtn.addEventListener("click", openCalendar);
+  closeBtn.addEventListener("click", closeCalendar);
+
+  // Build calendar for current month
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+
+  function buildCalendar() {
+    calendarGrid.innerHTML = "";
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    // Empty cells before first day
+    for (let i = 0; i < firstDay; i++) {
+      const emptyCell = document.createElement("div");
+      calendarGrid.appendChild(emptyCell);
+    }
+
+    // Create day cells
+    for (let d = 1; d <= totalDays; d++) {
+      const cell = document.createElement("div");
+      cell.classList.add("calendarCell");
+      cell.innerText = d;
+      cell.dataset.date = `${year}-${month+1}-${d}`;
+
+      cell.addEventListener("click", () => {
+        if (selectedSlots.includes(cell.dataset.date)) {
+          selectedSlots = selectedSlots.filter(s => s !== cell.dataset.date);
+        } else {
+          if (selectedSlots.length < 15) {
+            selectedSlots.push(cell.dataset.date);
+          } else {
+            alert("Maximum 15 slots allowed.");
+          }
+        }
+        updateCalendarSelection();
+      });
+
+      calendarGrid.appendChild(cell);
+    }
+  }
+
+  function updateCalendarSelection() {
+    const cells = document.querySelectorAll(".calendarCell");
+    cells.forEach(cell => {
+      if (selectedSlots.includes(cell.dataset.date)) {
+        cell.classList.add("selected");
+      } else {
+        cell.classList.remove("selected");
+      }
+    });
+    slotCountText.innerText = `Selected: ${selectedSlots.length} / 15`;
+  }
+
+  buildCalendar();
+</script>
+
+</body>
+</html>

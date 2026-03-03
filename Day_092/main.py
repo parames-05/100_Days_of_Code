@@ -3,7 +3,6 @@ import os
 
 app = Flask(__name__)
 
-# The exact text from your template
 SAMPLE_TEXT = '''The lighthouse had not blinked in decades, yet tonight it hummed like a throat clearing before speech.
 The sea was perfectly still, as if listening.
 Inside the tower, the spiral staircase descended farther than architecture should allow.
