@@ -1,0 +1,63 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<h1 class="page-title">Photos</h1>
+
+{% if not session.logged_in %}
+
+<form action="/galleries/album/{{gallery_name}}/upload" method="post" enctype="multipart/form-data" class="upload-panel">
+
+<p>Only JPEG allowed</p>
+
+<input type="file" name="file" accept="image/jpeg">
+
+<input type="hidden" name="galleryName" value="{{gallery_name}}">
+
+<button type="submit">Upload</button>
+
+</form>
+
+{% endif %}
+
+<div class="photo-grid">
+
+{% if photos is defined %}
+
+{% for photo in photos %}
+
+<div class="photo-card">
+
+{% if session['type'] == 'admin' %}
+
+<div class="admin-actions">
+
+<a href="javascript:void(0)" data-galleryname="{{gallery_name}}" data-photoname="{{photo}}" id="deletePhotobtn">
+
+Delete
+
+</a>
+
+</div>
+
+{% endif %}
+
+<a href="javascript:void(0)" id="popImage" data-imgsrc="/{{gallery_folder}}{{gallery_name}}/{{photo}}">
+
+<img src="/{{gallery_folder}}{{gallery_name}}/{{photo}}">
+
+</a>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>No Photos Found</p>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

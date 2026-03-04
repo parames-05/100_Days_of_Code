@@ -1,0 +1,65 @@
+{% extends '_layout.html' %}
+
+{% block body %}
+
+<h1 class="page-title">Galleries</h1>
+
+{% if not session.logged_in %}
+
+<div class="add-panel">
+
+<input type="text" id="galleryName" placeholder="Create Gallery">
+
+<button id="addGallerybtn">Add</button>
+
+</div>
+
+{% endif %}
+
+<div class="gallery-grid" id="galleriesList">
+
+{% if galleries is defined %}
+
+{% for gallery in galleries %}
+
+<div class="gallery-card">
+
+{% if session['type'] == 'admin' %}
+
+<div class="admin-actions">
+
+<button class="action-toggle">⚙</button>
+
+<div class="action-menu">
+
+<a href="" data-name="{{ gallery }}" data-toggle="modal" data-target="#myModal" id="editGallerybtn">Edit</a>
+
+<a href="javascript:void(0)" data-galleryname="{{ gallery }}" id="deleteGallerybtn">Delete</a>
+
+</div>
+
+</div>
+
+{% endif %}
+
+<a href="{{ url_for('gallery', gallery_name=gallery) }}">
+
+<img src="{{ url_for('static', filename='images/default-thumbnail.jpg') }}">
+
+<h3>{{ gallery }}</h3>
+
+</a>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>No Galleries Found</p>
+
+{% endif %}
+
+</div>
+
+{% endblock %}
